@@ -16,6 +16,7 @@ namespace RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Models
         public DbSet<PedidoDetalle> PedidoDetalles { get; set; }
         public DbSet<MovimientoStock> MovimientosStock { get; set; }
         public DbSet<ConfiguracionFacturacion> ConfiguracionesFacturacion { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -28,10 +29,12 @@ namespace RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Models
             modelBuilder.Entity<PedidoDetalle>().ToTable("PedidoDetalle");
             modelBuilder.Entity<MovimientoStock>().ToTable("MovimientoStock");
             modelBuilder.Entity<ConfiguracionFacturacion>().ToTable("ConfiguracionFacturacion");
+            modelBuilder.Entity<Usuario>().ToTable("Usuario");
 
             modelBuilder.Entity<Cliente>().HasIndex(c => c.Cedula).IsUnique();
             modelBuilder.Entity<TipoPlato>().HasIndex(t => t.Nombre).IsUnique();
             modelBuilder.Entity<Plato>().HasIndex(p => p.Nombre).IsUnique();
+            modelBuilder.Entity<Usuario>().HasIndex(u => u.UsuarioLogin).IsUnique();
 
             modelBuilder.Entity<Plato>().Property(p => p.Precio).HasPrecision(10, 2);
             modelBuilder.Entity<Pedido>().Property(p => p.Subtotal).HasPrecision(10, 2);

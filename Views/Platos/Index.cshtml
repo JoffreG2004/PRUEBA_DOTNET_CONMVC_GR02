@@ -1,0 +1,56 @@
+@model IEnumerable<RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Models.Plato>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Platos</title>
+    <link rel="stylesheet" href="~/css/styles.css" />
+</head>
+<body>
+    <div class="header">
+        <div class="header-title">Platos y Stock</div>
+    </div>
+
+    <div class="container">
+        <div class="main-content">
+            <h1>Platos</h1>
+
+            <div class="button-container">
+                <a class="app-button" href="@Url.Action("Create")">Nuevo Plato</a>
+                <a class="app-button" href="@Url.Action("Dashboard", "Admin")">Dashboard</a>
+            </div>
+
+            <table border="1" style="width:100%; text-align:center;">
+                <tr>
+                    <th>Tipo</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Stock</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+
+                @foreach (var plato in Model)
+                {
+                    <tr>
+                        <td>@(plato.TipoPlato != null ? plato.TipoPlato.Nombre : "")</td>
+                        <td>@plato.Nombre</td>
+                        <td>$ @plato.Precio</td>
+                        <td>@plato.Stock</td>
+                        <td>@(plato.Activo ? "Activo" : "Inactivo")</td>
+                        <td>
+                            <a href="@Url.Action("Edit", new { id = plato.IdPlato })">Editar</a> |
+                            <a href="@Url.Action("AumentarStock", new { id = plato.IdPlato })">Stock</a> |
+                            <a href="@Url.Action("Delete", new { id = plato.IdPlato })">Desactivar</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</body>
+</html>

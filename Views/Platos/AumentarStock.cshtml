@@ -1,0 +1,39 @@
+@model RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Models.Plato
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Aumentar Stock</title>
+    <link rel="stylesheet" href="~/css/styles.css" />
+</head>
+<body>
+    <div class="header"><div class="header-title">Aumentar Stock</div></div>
+    <div class="container">
+        <div class="main-content">
+            <h1>@Model.Nombre</h1>
+            <p class="subtitle">Stock actual: @Model.Stock</p>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" value="@Model.IdPlato" />
+                <div class="form-section">
+                    <div class="form-group-vertical">
+                        <label>Cantidad a ingresar</label>
+                        <input class="form-input" type="number" name="cantidad" min="1" required />
+                    </div>
+                </div>
+
+                <div class="button-container">
+                    <button type="submit">Aumentar</button>
+                    <a class="app-button" href="@Url.Action("Index")">Volver</a>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>

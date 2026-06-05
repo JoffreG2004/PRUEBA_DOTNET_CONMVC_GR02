@@ -1,0 +1,46 @@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="~/css/styles.css" />
+</head>
+<body>
+    <div class="header">
+        <div class="header-title">Dashboard Administrador</div>
+    </div>
+
+    <div class="container">
+        <div class="main-content">
+            <h1>Panel Administrativo</h1>
+            <p class="subtitle">Bienvenido @Session["AdminNombre"]</p>
+
+            <table border="1" style="width:100%; text-align:center;">
+                <tr>
+                    <th>Clientes</th>
+                    <th>Platos activos</th>
+                    <th>Facturas</th>
+                    <th>Ventas</th>
+                </tr>
+                <tr>
+                    <td>@ViewBag.TotalClientes</td>
+                    <td>@ViewBag.TotalPlatos</td>
+                    <td>@ViewBag.TotalPedidos</td>
+                    <td>$ @ViewBag.TotalVentas</td>
+                </tr>
+            </table>
+
+            <div class="button-container">
+                <a class="app-button" href="@Url.Action("Index", "Clientes")">CRUD Clientes</a>
+                <a class="app-button" href="@Url.Action("Index", "Platos")">Platos y Stock</a>
+                <a class="app-button" href="@Url.Action("Facturas", "Admin")">Facturas</a>
+                <a class="app-button" href="@Url.Action("Logout", "Admin")">Salir</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

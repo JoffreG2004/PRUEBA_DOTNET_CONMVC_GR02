@@ -151,11 +151,17 @@ table[border="1"] th {
 }
 
 table[border="1"] td {
-    padding: 12px;
+    padding: 10px;
     border: 1px solid #ede6d9;
     color: #14130a;
     vertical-align: middle;
     font-size: 13px;
+}
+
+table[border="1"] td img {
+    max-width: 96px;
+    height: 64px;
+    object-fit: cover;
 }
 
 table[border="1"] tr {
@@ -308,7 +314,10 @@ img:hover {
 
 input[type="text"],
 input[type="email"],
-input[type="tel"] {
+input[type="tel"],
+input[type="password"],
+input[type="number"],
+select {
     width: 100%;
     padding: 12px 14px;
     border: 2px solid #758956;
@@ -323,7 +332,10 @@ input[type="tel"] {
 
 input[type="text"]:focus,
 input[type="email"]:focus,
-input[type="tel"]:focus {
+input[type="tel"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+select:focus {
     outline: none;
     border-color: #3b2c20;
     box-shadow: 0 0 0 3px rgba(59, 44, 32, 0.2);
@@ -429,7 +441,100 @@ input[type="radio"]:checked {
     filter: drop-shadow(0 2px 5px rgba(59, 44, 32, 0.4));
 }
 
-button {
+.qty-control {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 128px;
+    height: 38px;
+    border: 3px solid #d8c800;
+    border-radius: 999px;
+    overflow: hidden;
+    background: #fffdf6;
+    box-shadow: none;
+}
+
+.qty-control.qty-active {
+    background: #fffdf6;
+    border-color: #3b2c20;
+}
+
+.qty-btn {
+    width: 38px;
+    height: 32px;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    color: #14130a;
+    font-size: 24px;
+    line-height: 1;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    flex: 0 0 38px;
+}
+
+.qty-btn:hover {
+    transform: none;
+    box-shadow: none;
+    background: #ede6d9;
+    color: #3b2c20;
+}
+
+.qty-btn::before {
+    display: none;
+}
+
+.qty-input {
+    width: 44px;
+    height: 32px;
+    border: none;
+    text-align: center;
+    background: #f5f0e8;
+    color: #14130a !important;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px !important;
+    font-weight: 800;
+    padding: 0;
+    flex: 0 0 44px;
+    box-shadow: none !important;
+    border-left: 2px solid #758956;
+    border-right: 2px solid #758956;
+}
+
+.qty-input:focus {
+    outline: none;
+}
+
+.order-summary-mini {
+    margin-top: 18px;
+    text-align: right;
+    font-family: 'Poppins', sans-serif;
+    color: #3b2c20;
+}
+
+.order-summary-mini strong {
+    display: inline-block;
+    min-width: 34px;
+    margin-left: 8px;
+    padding: 6px 10px;
+    border-radius: 12px;
+    background: #758956;
+    color: #f5f0e8;
+}
+
+.category-title-row td {
+    background: #758956;
+    color: #f5f0e8 !important;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px !important;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+button,
+.app-button {
     background: #758956;
     color: #f5f0e8;
     border: 3px solid #3b2c20;
@@ -445,9 +550,13 @@ button {
     box-shadow: 0 8px 20px rgba(117, 137, 86, 0.4);
     position: relative;
     overflow: hidden;
+    display: inline-block;
+    text-decoration: none;
+    margin: 6px;
 }
 
-button::before {
+button::before,
+.app-button::before {
     content: '';
     position: absolute;
     top: 50%;
@@ -460,19 +569,22 @@ button::before {
     transition: width 0.5s, height 0.5s;
 }
 
-button:hover {
+button:hover,
+.app-button:hover {
     background: #3b2c20;
     border-color: #758956;
     transform: translateY(-3px) scale(1.02);
     box-shadow: 0 12px 30px rgba(59, 44, 32, 0.5);
 }
 
-button:hover::before {
+button:hover::before,
+.app-button:hover::before {
     width: 280px;
     height: 280px;
 }
 
-button:active {
+button:active,
+.app-button:active {
     transform: translateY(-1px);
 }
 
@@ -550,5 +662,134 @@ button:active {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+.home-page {
+    min-height: 100vh;
+    background: #f5f0e8;
+    color: #14130a;
+}
+
+.home-shell {
+    min-height: calc(100vh - 230px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 34px 18px 24px;
+}
+
+.home-header {
+    border-radius: 0 0 12px 12px;
+}
+
+.home-panel {
+    width: min(920px, 100%);
+    margin: 0 auto;
+    background: #f5f0e8;
+    border: 3px solid #758956;
+    border-radius: 22px;
+    box-shadow: 0 18px 44px rgba(59, 44, 32, 0.18);
+    padding: 46px 28px 38px;
+    text-align: center;
+}
+
+.home-copy {
+    padding: 0;
+}
+
+.home-copy h1 {
+    color: #3b2c20;
+    text-align: center;
+    font-size: 38px;
+    line-height: 1.14;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+}
+
+.home-subtitle {
+    max-width: 620px;
+    margin: 0 auto 30px;
+    font-size: 17px;
+    color: #758956;
+    font-weight: 700;
+}
+
+.buy-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: #8fa65f;
+    color: #fffaf0;
+    border: 3px solid #f5f0e8;
+    border-radius: 18px;
+    padding: 20px 34px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.34);
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.buy-button:hover {
+    background: #758956;
+    transform: translateY(-3px);
+    box-shadow: 0 22px 44px rgba(0, 0, 0, 0.42);
+}
+
+.buy-icon {
+    font-size: 26px;
+    line-height: 1;
+}
+
+.home-note {
+    display: inline-block;
+    margin-top: 24px;
+    background: #ede6d9;
+    color: #3b2c20;
+    border: 3px solid #8fa65f;
+    border-radius: 14px;
+    padding: 12px 16px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.home-note span,
+.home-note strong {
+    display: block;
+    font-size: 13px;
+}
+
+.admin-mini {
+    width: min(920px, 100%);
+    margin: 28px auto 0;
+    text-align: right;
+}
+
+.admin-mini a {
+    color: rgba(59, 44, 32, 0.58);
+    font-size: 12px;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(59, 44, 32, 0.26);
+}
+
+.admin-mini a:hover {
+    color: #3b2c20;
+}
+
+.home-footer {
+    margin-top: 0;
+}
+
+@media (max-width: 760px) {
+    .home-copy h1 {
+        font-size: 34px;
+    }
+
+    .home-copy,
+    .home-subtitle,
+    .admin-mini {
+        text-align: center;
     }
 }

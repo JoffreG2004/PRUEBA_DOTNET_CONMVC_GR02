@@ -98,6 +98,7 @@
     <Content Include="Global.asax" />
     <Content Include="Images\apanado.jpg" />
     <Content Include="Images\arroz-marinero.jpg" />
+    <Content Include="Images\bolon-de-verde.jpg" />
     <Content Include="Images\bolón-de-verde.jpg" />
     <Content Include="Images\caldo-bolas-verde.jpg" />
     <Content Include="Images\caldo-de-gallina.jpg" />
@@ -116,6 +117,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PlatosController.cs" />
     <Compile Include="Controllers\RestauranteController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -128,6 +133,7 @@
     <Compile Include="Models\Plato.cs" />
     <Compile Include="Models\RestauranteDbContext.cs" />
     <Compile Include="Models\TipoPlato.cs" />
+    <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +142,21 @@
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Admin\Dashboard.cshtml" />
+    <Content Include="Views\Admin\Facturas.cshtml" />
+    <Content Include="Views\Admin\Login.cshtml" />
+    <Content Include="Views\Clientes\Create.cshtml" />
+    <Content Include="Views\Clientes\Delete.cshtml" />
+    <Content Include="Views\Clientes\Details.cshtml" />
+    <Content Include="Views\Clientes\Edit.cshtml" />
+    <Content Include="Views\Clientes\Index.cshtml" />
+    <Content Include="Views\Clientes\_Form.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Platos\AumentarStock.cshtml" />
+    <Content Include="Views\Platos\Create.cshtml" />
+    <Content Include="Views\Platos\Edit.cshtml" />
+    <Content Include="Views\Platos\Index.cshtml" />
+    <Content Include="Views\Platos\_Form.cshtml" />
     <Content Include="Views\Restaurante\index.cshtml" />
     <Content Include="Views\Restaurante\salida.cshtml" />
     <None Include="Web.Debug.config">

@@ -1,0 +1,42 @@
+@model RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Models.Plato
+
+<div class="form-section">
+    @Html.ValidationSummary(true)
+
+    <div class="form-group-vertical">
+        @Html.LabelFor(model => model.IdTipoPlato, "Tipo de plato")
+        @Html.DropDownList("IdTipoPlato", null, "Seleccione", new { @class = "form-input", required = "required" })
+    </div>
+
+    <div class="form-group-vertical">
+        @Html.LabelFor(model => model.Nombre)
+        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-input", required = "required", maxlength = "100" })
+    </div>
+
+    <div class="form-group-vertical">
+        @Html.LabelFor(model => model.Descripcion)
+        @Html.TextBoxFor(model => model.Descripcion, new { @class = "form-input", maxlength = "500" })
+    </div>
+
+    <div class="form-group-vertical">
+        @Html.LabelFor(model => model.Precio)
+        @Html.TextBoxFor(model => model.Precio, new { @class = "form-input", type = "number", step = "0.01", min = "0", required = "required" })
+    </div>
+
+    <div class="form-group-vertical">
+        @Html.LabelFor(model => model.Stock)
+        @Html.TextBoxFor(model => model.Stock, new { @class = "form-input", type = "number", min = "0", required = "required" })
+    </div>
+
+    <div class="form-group-vertical">
+        @Html.LabelFor(model => model.Imagen)
+        @Html.TextBoxFor(model => model.Imagen, new { @class = "form-input", maxlength = "200" })
+    </div>
+
+    <div class="form-group-vertical">
+        <label>
+            @Html.CheckBoxFor(model => model.Activo)
+            Activo
+        </label>
+    </div>
+</div>

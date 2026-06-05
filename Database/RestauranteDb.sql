@@ -8,12 +8,28 @@ USE RestauranteDb;
 GO
 
 IF OBJECT_ID('dbo.PedidoDetalle', 'U') IS NOT NULL DROP TABLE dbo.PedidoDetalle;
-IF OBJECT_ID('dbo.Pedido', 'U') IS NOT NULL DROP TABLE dbo.Pedido;
 IF OBJECT_ID('dbo.MovimientoStock', 'U') IS NOT NULL DROP TABLE dbo.MovimientoStock;
+IF OBJECT_ID('dbo.Pedido', 'U') IS NOT NULL DROP TABLE dbo.Pedido;
 IF OBJECT_ID('dbo.Plato', 'U') IS NOT NULL DROP TABLE dbo.Plato;
 IF OBJECT_ID('dbo.TipoPlato', 'U') IS NOT NULL DROP TABLE dbo.TipoPlato;
 IF OBJECT_ID('dbo.Cliente', 'U') IS NOT NULL DROP TABLE dbo.Cliente;
+IF OBJECT_ID('dbo.Usuario', 'U') IS NOT NULL DROP TABLE dbo.Usuario;
 IF OBJECT_ID('dbo.ConfiguracionFacturacion', 'U') IS NOT NULL DROP TABLE dbo.ConfiguracionFacturacion;
+GO
+
+CREATE TABLE dbo.Usuario
+(
+    IdUsuario INT IDENTITY(1,1) NOT NULL,
+    UsuarioLogin VARCHAR(50) NOT NULL,
+    Clave VARCHAR(100) NOT NULL,
+    Nombre VARCHAR(100) NOT NULL,
+    Rol VARCHAR(30) NOT NULL CONSTRAINT DF_Usuario_Rol DEFAULT ('Administrador'),
+    Activo BIT NOT NULL CONSTRAINT DF_Usuario_Activo DEFAULT (1),
+    FechaRegistro DATETIME NOT NULL CONSTRAINT DF_Usuario_FechaRegistro DEFAULT (GETDATE()),
+    CONSTRAINT PK_Usuario PRIMARY KEY (IdUsuario),
+    CONSTRAINT UQ_Usuario_UsuarioLogin UNIQUE (UsuarioLogin),
+    CONSTRAINT CK_Usuario_Rol CHECK (Rol IN ('Administrador'))
+);
 GO
 
 CREATE TABLE dbo.Cliente
@@ -156,16 +172,20 @@ INSERT INTO dbo.ConfiguracionFacturacion (IvaPorcentaje, ServicioPorcentaje)
 VALUES (12.00, 10.00);
 GO
 
+INSERT INTO dbo.Usuario (UsuarioLogin, Clave, Nombre, Rol)
+VALUES ('admin', 'admin', 'Administrador', 'Administrador');
+GO
+
 INSERT INTO dbo.Plato (IdTipoPlato, Nombre, Descripcion, Precio, Stock, Imagen)
 VALUES
 ((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Entrada'), 'Empanada de Morocho', 'Empanada tradicional ecuatoriana rellena de carne y vegetales.', 2.50, 20, 'empanada-de-morocho.jpg'),
-((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Entrada'), 'Bolon de Verde', 'Bolon de verde con queso o chicharron.', 3.00, 20, 'bolón-de-verde.jpg'),
+((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Entrada'), 'Bolon de Verde', 'Bolon de verde con queso o chicharron.', 3.00, 20, 'bolon-de-verde.jpg'),
 ((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Sopa'), 'Caldo de Bolas de Verde', 'Sopa tradicional con bolas de verde rellenas.', 4.50, 15, 'caldo-bolas-verde.jpg'),
 ((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Sopa'), 'Caldo de Gallina', 'Caldo de gallina criolla con papa y hierbas.', 4.00, 15, 'caldo-de-gallina.jpg'),
 ((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Plato fuerte'), 'Arroz Marinero', 'Arroz preparado con mariscos y especias.', 8.50, 12, 'arroz-marinero.jpg'),
 ((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Plato fuerte'), 'Churrasco', 'Carne a la plancha acompanada de guarniciones.', 6.00, 12, 'churrasco.jpg'),
 ((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Postre'), 'Dulce de Higos', 'Postre tradicional de higos en almibar.', 2.00, 18, 'dulce-de-higos.jpg'),
 ((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Postre'), 'Espumilla', 'Postre ecuatoriano batido con pulpa de fruta.', 1.50, 18, 'espumilla.jpg'),
-((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Bebida'), 'Jugo Natural', 'Jugo natural del dia.', 1.75, 30, NULL),
-((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Bebida'), 'Gaseosa', 'Bebida gaseosa personal.', 1.50, 30, NULL);
+((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Bebida'), 'Jugo Natural', 'Jugo natural del dia.', 1.75, 30, 'helado.jpg'),
+((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Bebida'), 'Gaseosa', 'Bebida gaseosa personal.', 1.50, 30, 'espumilla.jpg');
 GO

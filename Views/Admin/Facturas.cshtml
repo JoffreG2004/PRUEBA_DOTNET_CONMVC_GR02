@@ -1,0 +1,55 @@
+@model IEnumerable<RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Models.Pedido>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Facturas</title>
+    <link rel="stylesheet" href="~/css/styles.css" />
+</head>
+<body>
+    <div class="header">
+        <div class="header-title">Facturas Emitidas</div>
+    </div>
+
+    <div class="container">
+        <div class="main-content">
+            <h1>Facturas</h1>
+
+            <table border="1" style="width:100%; text-align:center;">
+                <tr>
+                    <th>#</th>
+                    <th>Fecha</th>
+                    <th>Cliente</th>
+                    <th>Subtotal</th>
+                    <th>IVA</th>
+                    <th>Servicio</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                </tr>
+
+                @foreach (var pedido in Model)
+                {
+                    <tr>
+                        <td>@pedido.IdPedido</td>
+                        <td>@pedido.FechaPedido.ToString("dd/MM/yyyy HH:mm")</td>
+                        <td>@(pedido.Cliente != null ? pedido.Cliente.Nombres + " " + pedido.Cliente.Apellidos : "Consumidor final")</td>
+                        <td>$ @pedido.Subtotal</td>
+                        <td>$ @pedido.IvaValor</td>
+                        <td>$ @pedido.ServicioValor</td>
+                        <td>$ @pedido.Total</td>
+                        <td>@pedido.Estado</td>
+                    </tr>
+                }
+            </table>
+
+            <div class="button-container">
+                <a class="app-button" href="@Url.Action("Dashboard", "Admin")">Volver</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

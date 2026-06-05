@@ -1,0 +1,37 @@
+@model RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Models.Cliente
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Detalle Cliente</title>
+    <link rel="stylesheet" href="~/css/styles.css" />
+</head>
+<body>
+    <div class="header">
+        <div class="header-title">Detalle Cliente</div>
+    </div>
+
+    <div class="container">
+        <div class="main-content">
+            <h1>@Model.Nombres @Model.Apellidos</h1>
+
+            <table border="1" style="width:100%;">
+                <tr><td>Cedula</td><td>@Model.Cedula</td></tr>
+                <tr><td>Telefono</td><td>@Model.Telefono</td></tr>
+                <tr><td>Email</td><td>@Model.Email</td></tr>
+                <tr><td>Direccion</td><td>@Model.Direccion</td></tr>
+                <tr><td>Estado</td><td>@(Model.Activo ? "Activo" : "Inactivo")</td></tr>
+            </table>
+
+            <div class="button-container">
+                <a href="@Url.Action("Edit", new { id = Model.IdCliente })">Editar</a>
+                <a href="@Url.Action("Index")">Volver</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

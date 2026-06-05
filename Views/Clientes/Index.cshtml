@@ -1,0 +1,62 @@
+@model IEnumerable<RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Models.Cliente>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Clientes</title>
+    <link rel="stylesheet" href="~/css/styles.css" />
+</head>
+<body>
+    <div class="header">
+        <div class="header-title">Clientes</div>
+        <div class="header-logo">
+            <img src="@Url.Content("~/Images/Monster.jpg")" alt="Logo" />
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="main-content">
+            <h1>CRUD de Clientes</h1>
+
+            <div class="button-container">
+                <a href="@Url.Action("Create")">Nuevo Cliente</a>
+            </div>
+
+            <table border="1" style="width:100%; text-align:center;">
+                <tr>
+                    <th>Cedula</th>
+                    <th>Nombres</th>
+                    <th>Apellidos</th>
+                    <th>Telefono</th>
+                    <th>Email</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+
+                @foreach (var cliente in Model)
+                {
+                    <tr>
+                        <td>@cliente.Cedula</td>
+                        <td>@cliente.Nombres</td>
+                        <td>@cliente.Apellidos</td>
+                        <td>@cliente.Telefono</td>
+                        <td>@cliente.Email</td>
+                        <td>@(cliente.Activo ? "Activo" : "Inactivo")</td>
+                        <td>
+                            <a href="@Url.Action("Edit", new { id = cliente.IdCliente })">Editar</a> |
+                            <a href="@Url.Action("Details", new { id = cliente.IdCliente })">Ver</a> |
+                            <a href="@Url.Action("Delete", new { id = cliente.IdCliente })">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+
+    <div class="footer">Master Monster © 2026</div>
+</body>
+</html>

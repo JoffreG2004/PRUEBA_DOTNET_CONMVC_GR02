@@ -1,0 +1,45 @@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Restaurante Master Monster</title>
+    <link rel="stylesheet" href="~/css/styles.css" />
+</head>
+<body class="home-page">
+    <div class="header home-header">
+        <div class="header-title">Restaurante Master Monster</div>
+        <div class="header-logo">
+            <img src="@Url.Content("~/Images/Monster.jpg")" alt="Logo" />
+        </div>
+    </div>
+
+    <main class="home-shell">
+        <section class="home-panel">
+            <div class="home-copy">
+                <h1>Elige tu pedido favorito</h1>
+                <p class="home-subtitle">Entradas, platos fuertes, postres y bebidas listos para armar tu compra.</p>
+
+                <a class="buy-button" href="@Url.Action("Index", "Restaurante")">
+                    <span class="buy-icon">&#128722;</span>
+                    Comprar ahora
+                </a>
+            </div>
+
+            <div class="home-note">
+                <span>IVA 12%</span>
+                <strong>+ servicio</strong>
+            </div>
+        </section>
+
+        <div class="admin-mini">
+            <a href="@Url.Action("Login", "Admin")">Administrador</a>
+        </div>
+    </main>
+
+    <div class="footer home-footer">Master Monster © 2026</div>
+</body>
+</html>

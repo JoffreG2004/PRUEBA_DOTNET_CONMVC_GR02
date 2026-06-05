@@ -1,0 +1,39 @@
+@model RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Models.Cliente
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Editar Cliente</title>
+    <link rel="stylesheet" href="~/css/styles.css" />
+</head>
+<body>
+    <div class="header">
+        <div class="header-title">Editar Cliente</div>
+    </div>
+
+    <div class="container">
+        <div class="main-content">
+            <h1>Editar Cliente</h1>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.IdCliente)
+                @Html.HiddenFor(model => model.FechaRegistro)
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                @Html.Partial("_Form", Model)
+
+                <div class="button-container">
+                    <button type="submit">Guardar</button>
+                    <a href="@Url.Action("Index")">Volver</a>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>

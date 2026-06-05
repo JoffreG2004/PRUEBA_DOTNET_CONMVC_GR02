@@ -1,0 +1,51 @@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Login Administrador</title>
+    <link rel="stylesheet" href="~/css/styles.css" />
+</head>
+<body>
+    <div class="header">
+        <div class="header-title">Administrador</div>
+    </div>
+
+    <div class="container">
+        <div class="main-content">
+            <h1>Login</h1>
+            <p class="subtitle">Usuario: admin / Clave: admin</p>
+
+            @if (ViewBag.Error != null)
+            {
+                <div id="errores-validacion" class="mostrar">
+                    <h3>@ViewBag.Error</h3>
+                </div>
+            }
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-section">
+                    <div class="form-group-vertical">
+                        <label>Usuario</label>
+                        <input class="form-input" type="text" name="usuario" required />
+                    </div>
+                    <div class="form-group-vertical">
+                        <label>Clave</label>
+                        <input class="form-input" type="password" name="clave" required />
+                    </div>
+                </div>
+
+                <div class="button-container">
+                    <button type="submit">Ingresar</button>
+                    <a class="app-button" href="@Url.Action("Index", "Home")">Volver</a>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>
