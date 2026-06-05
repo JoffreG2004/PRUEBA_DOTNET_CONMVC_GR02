@@ -1,0 +1,215 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Restaurante Master Monster</title>
+    <link rel="stylesheet" href="~/css/styles.css" />
+</head>
+<body>
+
+    <div class="header">
+        <div class="header-title">
+            Restaurante Master Monster
+        </div>
+
+        <div class="header-logo">
+            <img src="@Url.Content("~/Images/Monster.jpg")" alt="Logo" />
+        </div>
+    </div>
+    <div class="container">
+        <div class="main-content">
+
+            <h1>Realizar tu Pedido</h1>
+
+            <div id="errores-validacion"></div>
+
+            <form action="@Url.Action("Salida","Restaurante")" method="post">
+
+                <div class="form-section">
+                    <h2>Tus Datos</h2>
+                    <div class="form-group-vertical">
+                        <label>Nombres</label>
+                        <input type="text" name="nombres" placeholder="Ingresa tus nombres" required class="form-input" />
+                    </div>
+                    <div class="form-group-vertical">
+                        <label>Teléfono</label>
+                        <input type="text" name="telefono" placeholder="Ingresa tu teléfono" required class="form-input" />
+                    </div>
+                    <div class="form-group-vertical">
+                        <label>Email</label>
+                        <input type="email" name="email" placeholder="Ingresa tu email" required class="form-input" />
+                    </div>
+                </div>
+
+                <br />
+
+                <h2>ENTRADAS</h2>
+
+                <table border="1" style="width:100%; text-align:center;">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Imagen</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Seleccionar</th>
+                    </tr>
+
+                    <tr>
+                        <td>Empanada de Morocho</td>
+                        <td><img src="@Url.Content("~/Images/empanada-de-morocho.jpg")" width="100" /></td>
+                        <td>La empanada de morocho es un platillo tradicional ecuatoriano, hecho con masa de maíz morocho y relleno de carne, arvejas y otros ingredientes, que se fríe hasta dorarse.</td>
+                        <td>$2.50</td>
+                        <td><input type="radio" id="rbtnEntradaEmpanada" name="rbtnEntrada" value="Empanada de Morocho" /></td>
+                    </tr>
+
+                    <tr>
+                        <td>Bolón de Verde</td>
+                        <td><img src="@Url.Content("~/Images/bolón-de-verde.jpg")" width="100" /></td>
+                        <td>El bolón de verde es un plato típico de Ecuador, elaborado con plátano verde machacado mezclado con queso o chicharrón y luego frito.</td>
+                        <td>$3.00</td>
+                        <td><input type="radio" id="rbtnEntradaBolon" name="rbtnEntrada" value="Bolón de Verde" /></td>
+                    </tr>
+
+                    <tr>
+                        <td>Ceviche de Camarón</td>
+                        <td><img src="@Url.Content("~/Images/ceviche-de-camaron.jpg")" width="100" /></td>
+                        <td>El ceviche de camarón es un platillo fresco y cítrico donde los camarones se cocinan en jugo de limón y se mezclan con vegetales frescos.</td>
+                        <td>$6.50</td>
+                        <td><input type="radio" id="rbtnEntradaCeviche" name="rbtnEntrada" value="Ceviche de Camarón" /></td>
+                    </tr>
+
+                </table>
+
+                <h2>SOPAS</h2>
+
+                <table border="1" style="width:100%; text-align:center;">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Imagen</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Seleccionar</th>
+                    </tr>
+
+                    <tr>
+                        <td>Caldo de Bolas de Verde</td>
+                        <td><img src="@Url.Content("~/Images/caldo-bolas-verde.jpg")" width="100" /></td>
+                        <td>El caldo de bolas de verde es una sopa tradicional ecuatoriana de la región costera, hecha con bolas de plátano verde rellenas de carne y vegetales, cocidas en un caldo sabroso con yuca y maíz.</td>
+                        <td>$4.50</td>
+                        <td><input type="radio" id="rbtnSopaBolas" name="rbtnSopa" value="Caldo de Bolas de Verde" /></td>
+                    </tr>
+
+                    <tr>
+                        <td>Caldo de Gallina</td>
+                        <td><img src="@Url.Content("~/Images/caldo-de-gallina.jpg")" width="100" /></td>
+                        <td>El caldo de gallina criolla o de pollo ecuatoriano, es un plato muy simple, que se puede servir como consomé, o el caldo con la presa. También, puedes acompañarlo con una papa cocinada, cebollita blanca y cilantro o perejil picado.</td>
+                        <td>$4.00</td>
+                        <td><input type="radio" id="rbtnSopaGallina" name="rbtnSopa" value="Caldo de Gallina" /></td>
+                    </tr>
+
+                    <tr>
+                        <td>Caldo de Patas</td>
+                        <td><img src="@Url.Content("~/Images/caldo-de-patas.png")" width="100" /></td>
+                        <td>El Caldo de patas es una sopa tradicional ecuatoriana hecha con patas de res, mote, yuca, maní y leche, acompañada de arroz y ají, ideal para días fríos y reuniones familiares.</td>
+                        <td>$4.00</td>
+                        <td><input type="radio" id="rbtnSopaPatas" name="rbtnSopa" value="Caldo de Patas" /></td>
+                    </tr>
+
+                </table>
+
+                <h2>PLATOS FUERTES</h2>
+
+                <table border="1" style="width:100%; text-align:center;">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Imagen</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Seleccionar</th>
+                    </tr>
+
+                    <tr>
+                        <td>Arroz Marinero</td>
+                        <td><img src="@Url.Content("~/Images/arroz-marinero.jpg")" width="100" /></td>
+                        <td>El arroz marinero es un plato latinoamericano de arroz con mariscos, similar a la paella española, que combina arroz cocido en caldo de mariscos con camarones, calamares, mejillones, almejas y especias.</td>
+                        <td>$8.50</td>
+                        <td><input type="radio" id="rbtnPlatoMarinero" name="rbtnPlatoFuerte" value="Arroz Marinero" /></td>
+                    </tr>
+
+                    <tr>
+                        <td>Churrasco</td>
+                        <td><img src="@Url.Content("~/Images/churrasco.jpg")" width="100" /></td>
+                        <td>El churrasco es un corte de carne popular en América Latina, preparado a la parrilla o a la plancha, y varía en su preparación según el país.</td>
+                        <td>$6.00</td>
+                        <td><input type="radio" id="rbtnPlatoChurrasco" name="rbtnPlatoFuerte" value="Churrasco" /></td>
+                    </tr>
+
+                    <tr>
+                        <td>Apanado</td>
+                        <td><img src="@Url.Content("~/Images/apanado.jpg")" width="100" /></td>
+                        <td>El apanado de carne es un plato tradicional que consiste en filetes de carne empanizados, crujientes por fuera y jugosos por dentro, muy popular en la gastronomía latinoamericana.</td>
+                        <td>$5.50</td>
+                        <td><input type="radio" id="rbtnPlatoApanado" name="rbtnPlatoFuerte" value="Apanado" /></td>
+                    </tr>
+
+                </table>
+
+                <h2>POSTRES</h2>
+
+                <table border="1" style="width:100%; text-align:center;">
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Imagen</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Seleccionar</th>
+                    </tr>
+
+                    <tr>
+                        <td>Dulce de Higos</td>
+                        <td><img src="@Url.Content("~/Images/dulce-de-higos.jpg")" width="100" /></td>
+                        <td>El dulce de higos es un postre tradicional ecuatoriano con profundas raíces en la época colonial, siendo un clásico en los hogares y festividades. Está hecho a base de higos tiernos que se cocinan lentamente en un espeso almíbar de panela, aromatizado con canela y clavo de olor, y requiere un largo proceso de preparación para lograr su textura suave. Tradicionalmente se sirve acompañado de una rebanada de queso fresco para contrastar su intenso dulzor.</td>
+                        <td>$2.00</td>
+                        <td><input type="radio" id="rbtnPostreHigos" name="rbtnPostre" value="Dulce de Higos" /></td>
+                    </tr>
+
+                    <tr>
+                        <td>Espumilla</td>
+                        <td><img src="@Url.Content("~/Images/espumilla.jpg")" width="100" /></td>
+                        <td>La espumilla es un merengue tradicional ecuatoriano y una popular comida callejera. Posiblemente se remonta a 1907, según registros que mencionan su existencia, está hecha con claras de huevo, azúcar y pulpa de fruta, a menudo de guayaba, y se bate frecuentemente a mano para lograr la textura adecuada.</td>
+                        <td>$1.50</td>
+                        <td><input type="radio" id="rbtnPostreEspumilla" name="rbtnPostre" value="Espumilla" /></td>
+                    </tr>
+
+                    <tr>
+                        <td>Helado</td>
+                        <td><img src="@Url.Content("~/Images/helado.jpg")" width="100" /></td>
+                        <td>En su forma más simple, el helado o crema helada es un alimento congelado que por lo general se hace de productos lácteos tales como leche o crema. </td>
+                        <td>$2.00</td>
+                        <td><input type="radio" id="rbtnPostreHelado" name="rbtnPostre" value="Helado" /></td>
+                    </tr>
+
+                </table>
+
+                <div class="button-container">
+                    <button type="submit">Confirmar Pedido</button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <div class="footer">
+        Master Monster © 2026
+    </div>
+
+    <script src="~/Scripts/validaciones.js"></script>
+</body>
+</html>
+
+

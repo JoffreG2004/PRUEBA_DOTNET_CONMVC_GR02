@@ -1,0 +1,27 @@
+# Visual Studio cache
+.vs/
+
+# Build output
+bin/
+obj/
+
+# NuGet packages restored by Visual Studio
+packages/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# ASP.NET generated files
+App_Data/*.mdf
+App_Data/*.ldf
+
+# Logs and temporary files
+*.log
+*.tmp
+*.cache
+
+# IIS Express
+*.applicationhost.config

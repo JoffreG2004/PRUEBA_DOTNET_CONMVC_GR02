@@ -1,0 +1,96 @@
+﻿@model RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Models.Pedido
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Resultado - Pedido</title>
+    <link rel="stylesheet" href="~/css/styles.css" />
+</head>
+<body>
+
+    <div class="header">
+        <div class="header-title">
+            🍽️ Restaurante Master Monster
+        </div>
+
+        <div class="header-logo">
+            <img src="@Url.Content("~/Images/Monster.jpg")" alt="Logo" />
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="main-content">
+
+            <h1>Resumen de tu Pedido</h1>
+
+            <h2>Datos del Cliente</h2>
+
+            <table border="1">
+                <tr>
+                    <td>Nombre</td>
+                    <td>@Model.Nombres</td>
+                </tr>
+                <tr>
+                    <td>Teléfono</td>
+                    <td>@Model.Telefono</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>@Model.Email</td>
+                </tr>
+            </table>
+
+            <h2>Detalle del Pedido</h2>
+
+            <table border="1" style="width:100%; text-align:center;">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Imagen</th>
+                    <th>Descripción</th>
+                    <th>Precio</th>
+                </tr>
+
+                @if (Model.Platos != null && Model.Platos.Count > 0)
+                {
+                    foreach (var p in Model.Platos)
+                    {
+                        <tr>
+                            <td>@p.Nombre</td>
+                            <td>
+                                <img src="@Url.Content("~/Images/" + p.Imagen)" width="100" />
+                            </td>
+                            <td>@p.Descripcion</td>
+                            <td>$ @p.Precio</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="4">No seleccionó platos</td>
+                    </tr>
+                }
+
+            </table>
+
+            <div style="text-align: center; margin-top: 40px; margin-bottom: 20px;">
+                <h3 style="font-size: 28px; color: #758956;">Total a Pagar: $ @Model.Total</h3>
+            </div>
+
+            <div style="text-align:center; margin-top: 30px;">
+                <a href="@Url.Action("Index", "Restaurante")" style="display: inline-block; background: #758956; color: #f5f0e8; padding: 14px 40px; border-radius: 50px; text-decoration: none; font-family: 'Poppins', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: 1px; box-shadow: 0 8px 20px rgba(117, 137, 86, 0.4); transition: all 0.3s ease;">Realizar Otro Pedido</a>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="footer">
+        Master Monster © 2026
+    </div>
+
+</body>
+</html>
