@@ -1,6 +1,7 @@
 @model RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Models.Pedido
 @{
     Layout = null;
+    bool modoAdmin = ViewBag.ModoAdmin == true;
 }
 
 <!DOCTYPE html>
@@ -22,7 +23,14 @@
         </div>
         <div class="invoice-nav-meta">
             <span>Factura #@Model.IdPedido</span>
-            <a href="@Url.Action("Index", "Home")">Inicio</a>
+            @if (modoAdmin)
+            {
+                <a href="@Url.Action("Dashboard", "Admin")">Regresar al Dashboard</a>
+            }
+            else
+            {
+                <a href="@Url.Action("Index", "Home")">Inicio</a>
+            }
         </div>
     </div>
 
@@ -104,9 +112,12 @@
                 <tr><td><strong>Total</strong></td><td><strong>$ @Model.Total</strong></td></tr>
             </table>
 
-            <div class="button-container">
-                <a class="app-button" href="@Url.Action("Index", "Restaurante")">Realizar Otro Pedido</a>
-            </div>
+            @if (!modoAdmin)
+            {
+                <div class="button-container">
+                    <a class="app-button" href="@Url.Action("Index", "Restaurante")">Realizar Otro Pedido</a>
+                </div>
+            }
 
         </div>
     </div>

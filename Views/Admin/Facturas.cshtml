@@ -63,7 +63,7 @@
                                 <td><strong>$ @pedido.Total</strong></td>
                                 <td><span class="admin-status admin-status-ok">@pedido.Estado</span></td>
                                 <td>
-                                    <a class="btn btn-sm btn-outline-success" href="@Url.Action("Factura", "Restaurante", new { id = pedido.IdPedido })">
+                                    <a class="btn btn-sm btn-outline-success" href="@Url.Action("Factura", "Admin", new { id = pedido.IdPedido })">
                                         <i class="bi bi-eye"></i> Ver
                                     </a>
                                 </td>

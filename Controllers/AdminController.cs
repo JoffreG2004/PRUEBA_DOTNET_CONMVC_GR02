@@ -73,6 +73,27 @@ namespace RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Controllers
             return View(pedidos);
         }
 
+        public ActionResult Factura(int id)
+        {
+            if (!EsAdmin())
+            {
+                return RedirectToAction("Login");
+            }
+
+            var pedido = db.Pedidos
+                .Include(p => p.Cliente)
+                .Include(p => p.Detalles.Select(d => d.Plato))
+                .FirstOrDefault(p => p.IdPedido == id);
+
+            if (pedido == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.ModoAdmin = true;
+            return View("~/Views/Restaurante/salida.cshtml", pedido);
+        }
+
         private bool EsAdmin()
         {
             return Session["AdminId"] != null;
