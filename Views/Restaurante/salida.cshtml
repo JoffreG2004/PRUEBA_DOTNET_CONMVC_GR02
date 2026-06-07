@@ -12,13 +12,17 @@
 </head>
 <body>
 
-    <div class="header">
-        <div class="header-title">
-            Restaurante Master Monster
-        </div>
-
-        <div class="header-logo">
+    <div class="invoice-navbar">
+        <div class="invoice-brand">
             <img src="@Url.Content("~/Images/Monster.jpg")" alt="Logo" />
+            <div>
+                <span>Restaurante</span>
+                <strong>Master Monster</strong>
+            </div>
+        </div>
+        <div class="invoice-nav-meta">
+            <span>Factura #@Model.IdPedido</span>
+            <a href="@Url.Action("Index", "Home")">Inicio</a>
         </div>
     </div>
 

@@ -115,7 +115,26 @@ namespace RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Controllers
             }
 
             db.SaveChanges();
-            return View(pedido);
+            return RedirectToAction("Factura", new { id = pedido.IdPedido });
+        }
+
+        public ActionResult Factura(int id)
+        {
+            var pedido = db.Pedidos
+                .Include(p => p.Cliente)
+                .Include(p => p.Detalles.Select(d => d.Plato))
+                .FirstOrDefault(p => p.IdPedido == id);
+
+            if (pedido == null)
+            {
+                return HttpNotFound();
+            }
+
+            pedido.Nombres = pedido.Cliente != null ? pedido.Cliente.Nombres + " " + pedido.Cliente.Apellidos : "";
+            pedido.Telefono = pedido.Cliente != null ? pedido.Cliente.Telefono : "";
+            pedido.Email = pedido.Cliente != null ? pedido.Cliente.Email : "";
+
+            return View("salida", pedido);
         }
 
         private Cliente ObtenerCliente(string tipoCliente, string nombres, string apellidos, string cedula, string telefono, string email, string direccion)
@@ -135,7 +154,7 @@ namespace RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Controllers
                     Nombres = "Consumidor",
                     Apellidos = "Final",
                     Telefono = "N/A",
-                    Email = "N/A",
+                    Email = "consumidorfinal@restaurante.local",
                     Direccion = "N/A"
                 };
                 db.Clientes.Add(consumidorFinal);

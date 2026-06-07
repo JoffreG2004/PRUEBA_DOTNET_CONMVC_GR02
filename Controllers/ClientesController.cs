@@ -27,6 +27,11 @@ namespace RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Controllers
 
         public ActionResult Details(int? id)
         {
+            if (!EsAdmin())
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

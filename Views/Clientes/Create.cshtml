@@ -8,30 +8,45 @@
 <head>
     <meta charset="utf-8" />
     <title>Nuevo Cliente</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/bootstrap-icons.css" />
     <link rel="stylesheet" href="~/css/styles.css" />
 </head>
-<body>
-    <div class="header">
-        <div class="header-title">Nuevo Cliente</div>
-    </div>
+<body class="admin-page">
+    <nav class="admin-topbar">
+        <div class="admin-brand">
+            <span class="admin-brand-icon"><i class="bi bi-person-plus"></i></span>
+            <div>
+                <small>Clientes</small>
+                <strong>Nuevo Cliente</strong>
+            </div>
+        </div>
+        <a class="admin-topbar-link" href="@Url.Action("Index")"><i class="bi bi-arrow-left"></i> Volver</a>
+    </nav>
 
-    <div class="container">
-        <div class="main-content">
-            <h1>Registrar Cliente</h1>
+    <main class="admin-shell admin-shell-narrow">
+        <section class="admin-panel">
+            <div class="admin-panel-header">
+                <div>
+                    <p class="admin-eyebrow">Registro</p>
+                    <h1>Registrar Cliente</h1>
+                </div>
+            </div>
 
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
                 @Html.Partial("_Form", Model)
 
-                <div class="button-container">
-                    <button type="submit">Guardar</button>
-                    <a href="@Url.Action("Index")">Volver</a>
+                <div class="admin-form-actions">
+                    <button class="btn admin-primary-btn" type="submit"><i class="bi bi-save"></i> Guardar</button>
+                    <a class="btn btn-outline-secondary" href="@Url.Action("Index")">Cancelar</a>
                 </div>
             }
-        </div>
-    </div>
+        </section>
+    </main>
+
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

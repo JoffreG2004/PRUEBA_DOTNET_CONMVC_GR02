@@ -8,6 +8,8 @@
 <head>
     <meta charset="utf-8" />
     <title>Restaurante Master Monster</title>
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/bootstrap-icons.css" />
+    <link rel="stylesheet" href="~/lib/sweetalert2/sweetalert2.min.css" />
     <link rel="stylesheet" href="~/css/styles.css" />
 </head>
 <body>
@@ -35,7 +37,7 @@
                 </div>
             }
 
-            <form action="@Url.Action("Salida","Restaurante")" method="post">
+            <form action="@Url.Action("Salida","Restaurante")" method="post" class="js-confirm-form" data-confirm-title="Emitir factura" data-confirm-text="Se guardara el pedido y se descontara el stock seleccionado." data-confirm-button="Emitir factura">
 
                 <div class="form-section">
                     <h2>Tus Datos</h2>
@@ -122,7 +124,7 @@
                 </div>
 
                 <div class="button-container">
-                    <button type="submit">Confirmar Pedido</button>
+                    <button type="submit"><i class="bi bi-receipt"></i> Confirmar Pedido</button>
                     <a class="app-button" href="@Url.Action("Index", "Home")">Volver</a>
                 </div>
 
@@ -135,6 +137,8 @@
         Master Monster © 2026
     </div>
 
+    <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="~/Scripts/confirmaciones.js"></script>
     <script>
         document.querySelectorAll('input[name="tipoCliente"]').forEach(function (opcion) {
             opcion.addEventListener('change', function () {

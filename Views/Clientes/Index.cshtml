@@ -8,55 +8,84 @@
 <head>
     <meta charset="utf-8" />
     <title>Clientes</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/bootstrap-icons.css" />
     <link rel="stylesheet" href="~/css/styles.css" />
 </head>
-<body>
-    <div class="header">
-        <div class="header-title">Clientes</div>
-        <div class="header-logo">
-            <img src="@Url.Content("~/Images/Monster.jpg")" alt="Logo" />
+<body class="admin-page">
+    <nav class="admin-topbar">
+        <div class="admin-brand">
+            <span class="admin-brand-icon"><i class="bi bi-person-vcard"></i></span>
+            <div>
+                <small>Administracion</small>
+                <strong>Gestion de Clientes</strong>
+            </div>
         </div>
-    </div>
+        <a class="admin-topbar-link" href="@Url.Action("Dashboard", "Admin")">
+            <i class="bi bi-arrow-left"></i> Dashboard
+        </a>
+    </nav>
 
-    <div class="container">
-        <div class="main-content">
-            <h1>CRUD de Clientes</h1>
-
-            <div class="button-container">
-                <a href="@Url.Action("Create")">Nuevo Cliente</a>
+    <main class="admin-shell">
+        <section class="admin-panel">
+            <div class="admin-panel-header">
+                <div>
+                    <p class="admin-eyebrow">Clientes registrados</p>
+                    <h1>Gestion de Clientes</h1>
+                </div>
+                <a class="btn admin-primary-btn" href="@Url.Action("Create")">
+                    <i class="bi bi-plus-lg"></i> Nuevo Cliente
+                </a>
             </div>
 
-            <table border="1" style="width:100%; text-align:center;">
-                <tr>
-                    <th>Cedula</th>
-                    <th>Nombres</th>
-                    <th>Apellidos</th>
-                    <th>Telefono</th>
-                    <th>Email</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                </tr>
+            <div class="admin-table-wrap">
+                <table class="table admin-data-table align-middle">
+                    <thead>
+                        <tr>
+                            <th>Cedula</th>
+                            <th>Nombres</th>
+                            <th>Apellidos</th>
+                            <th>Telefono</th>
+                            <th>Email</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var cliente in Model)
+                        {
+                            <tr>
+                                <td><strong>@cliente.Cedula</strong></td>
+                                <td>@cliente.Nombres</td>
+                                <td>@cliente.Apellidos</td>
+                                <td>@cliente.Telefono</td>
+                                <td>@cliente.Email</td>
+                                <td>
+                                    <span class="admin-status @(cliente.Activo ? "admin-status-ok" : "admin-status-off")">
+                                        @(cliente.Activo ? "Activo" : "Inactivo")
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="admin-row-actions">
+                                        <a class="btn btn-sm btn-outline-success" href="@Url.Action("Edit", new { id = cliente.IdCliente })" title="Editar">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-outline-primary" href="@Url.Action("Details", new { id = cliente.IdCliente })" title="Ver">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-outline-danger" href="@Url.Action("Delete", new { id = cliente.IdCliente })" title="Eliminar">
+                                            <i class="bi bi-trash3"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
 
-                @foreach (var cliente in Model)
-                {
-                    <tr>
-                        <td>@cliente.Cedula</td>
-                        <td>@cliente.Nombres</td>
-                        <td>@cliente.Apellidos</td>
-                        <td>@cliente.Telefono</td>
-                        <td>@cliente.Email</td>
-                        <td>@(cliente.Activo ? "Activo" : "Inactivo")</td>
-                        <td>
-                            <a href="@Url.Action("Edit", new { id = cliente.IdCliente })">Editar</a> |
-                            <a href="@Url.Action("Details", new { id = cliente.IdCliente })">Ver</a> |
-                            <a href="@Url.Action("Delete", new { id = cliente.IdCliente })">Eliminar</a>
-                        </td>
-                    </tr>
-                }
-            </table>
-        </div>
-    </div>
-
-    <div class="footer">Master Monster © 2026</div>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

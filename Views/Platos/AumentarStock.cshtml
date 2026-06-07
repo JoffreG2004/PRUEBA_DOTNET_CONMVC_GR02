@@ -8,32 +8,51 @@
 <head>
     <meta charset="utf-8" />
     <title>Aumentar Stock</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/bootstrap-icons.css" />
     <link rel="stylesheet" href="~/css/styles.css" />
 </head>
-<body>
-    <div class="header"><div class="header-title">Aumentar Stock</div></div>
-    <div class="container">
-        <div class="main-content">
-            <h1>@Model.Nombre</h1>
-            <p class="subtitle">Stock actual: @Model.Stock</p>
+<body class="admin-page">
+    <nav class="admin-topbar">
+        <div class="admin-brand">
+            <span class="admin-brand-icon"><i class="bi bi-box-seam"></i></span>
+            <div>
+                <small>Inventario</small>
+                <strong>Aumentar Stock</strong>
+            </div>
+        </div>
+        <a class="admin-topbar-link" href="@Url.Action("Index")"><i class="bi bi-arrow-left"></i> Volver</a>
+    </nav>
+
+    <main class="admin-shell admin-shell-narrow">
+        <section class="admin-panel">
+            <div class="admin-stock-card">
+                <i class="bi bi-basket2"></i>
+                <div>
+                    <p class="admin-eyebrow">Stock actual: @Model.Stock</p>
+                    <h1>@Model.Nombre</h1>
+                </div>
+            </div>
 
             @using (Html.BeginForm())
             {
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="id" value="@Model.IdPlato" />
-                <div class="form-section">
+                <div class="form-section admin-form-grid admin-form-single">
                     <div class="form-group-vertical">
                         <label>Cantidad a ingresar</label>
                         <input class="form-input" type="number" name="cantidad" min="1" required />
                     </div>
                 </div>
 
-                <div class="button-container">
-                    <button type="submit">Aumentar</button>
-                    <a class="app-button" href="@Url.Action("Index")">Volver</a>
+                <div class="admin-form-actions">
+                    <button class="btn admin-primary-btn" type="submit"><i class="bi bi-plus-lg"></i> Aumentar</button>
+                    <a class="btn btn-outline-secondary" href="@Url.Action("Index")">Cancelar</a>
                 </div>
             }
-        </div>
-    </div>
+        </section>
+    </main>
+
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

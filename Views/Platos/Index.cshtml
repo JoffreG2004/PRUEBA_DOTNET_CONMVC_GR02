@@ -8,49 +8,94 @@
 <head>
     <meta charset="utf-8" />
     <title>Platos</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/bootstrap-icons.css" />
+    <link rel="stylesheet" href="~/lib/sweetalert2/sweetalert2.min.css" />
     <link rel="stylesheet" href="~/css/styles.css" />
 </head>
-<body>
-    <div class="header">
-        <div class="header-title">Platos y Stock</div>
-    </div>
+<body class="admin-page">
+    <nav class="admin-topbar">
+        <div class="admin-brand">
+            <span class="admin-brand-icon"><i class="bi bi-basket2"></i></span>
+            <div>
+                <small>Administracion</small>
+                <strong>Platos y Stock</strong>
+            </div>
+        </div>
+        <a class="admin-topbar-link" href="@Url.Action("Dashboard", "Admin")">
+            <i class="bi bi-arrow-left"></i> Dashboard
+        </a>
+    </nav>
 
-    <div class="container">
-        <div class="main-content">
-            <h1>Platos</h1>
-
-            <div class="button-container">
-                <a class="app-button" href="@Url.Action("Create")">Nuevo Plato</a>
-                <a class="app-button" href="@Url.Action("Dashboard", "Admin")">Dashboard</a>
+    <main class="admin-shell">
+        <section class="admin-panel">
+            <div class="admin-panel-header">
+                <div>
+                    <p class="admin-eyebrow">Inventario</p>
+                    <h1>Platos</h1>
+                </div>
+                <a class="btn admin-primary-btn" href="@Url.Action("Create")">
+                    <i class="bi bi-plus-lg"></i> Nuevo Plato
+                </a>
             </div>
 
-            <table border="1" style="width:100%; text-align:center;">
-                <tr>
-                    <th>Tipo</th>
-                    <th>Nombre</th>
-                    <th>Precio</th>
-                    <th>Stock</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                </tr>
+            <div class="admin-table-wrap">
+                <table class="table admin-data-table align-middle">
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Nombre</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var plato in Model)
+                        {
+                            <tr>
+                                <td><span class="admin-type-pill">@(plato.TipoPlato != null ? plato.TipoPlato.Nombre : "")</span></td>
+                                <td><strong>@plato.Nombre</strong></td>
+                                <td>$ @plato.Precio</td>
+                                <td>
+                                    <span class="admin-stock-pill @(plato.Stock <= 5 ? "admin-stock-low" : "")">
+                                        @plato.Stock disponibles
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="admin-status @(plato.Activo ? "admin-status-ok" : "admin-status-off")">
+                                        @(plato.Activo ? "Activo" : "Inactivo")
+                                    </span>
+                                </td>
+                                <td>
+                                    <div class="admin-row-actions">
+                                        <a class="btn btn-sm btn-outline-success" href="@Url.Action("Edit", new { id = plato.IdPlato })" title="Editar">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-outline-primary" href="@Url.Action("AumentarStock", new { id = plato.IdPlato })" title="Aumentar stock">
+                                            <i class="bi bi-box-seam"></i>
+                                        </a>
+                                        <a class="btn btn-sm btn-outline-danger js-confirm-link"
+                                           href="@Url.Action("Delete", new { id = plato.IdPlato })"
+                                           data-confirm-title="Desactivar plato"
+                                           data-confirm-text="El plato @plato.Nombre ya no aparecera para comprar."
+                                           data-confirm-button="Desactivar"
+                                           title="Desactivar">
+                                            <i class="bi bi-trash3"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
 
-                @foreach (var plato in Model)
-                {
-                    <tr>
-                        <td>@(plato.TipoPlato != null ? plato.TipoPlato.Nombre : "")</td>
-                        <td>@plato.Nombre</td>
-                        <td>$ @plato.Precio</td>
-                        <td>@plato.Stock</td>
-                        <td>@(plato.Activo ? "Activo" : "Inactivo")</td>
-                        <td>
-                            <a href="@Url.Action("Edit", new { id = plato.IdPlato })">Editar</a> |
-                            <a href="@Url.Action("AumentarStock", new { id = plato.IdPlato })">Stock</a> |
-                            <a href="@Url.Action("Delete", new { id = plato.IdPlato })">Desactivar</a>
-                        </td>
-                    </tr>
-                }
-            </table>
-        </div>
-    </div>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="~/Scripts/confirmaciones.js"></script>
 </body>
 </html>

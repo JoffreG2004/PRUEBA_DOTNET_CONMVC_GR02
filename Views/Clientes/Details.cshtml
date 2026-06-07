@@ -8,30 +8,51 @@
 <head>
     <meta charset="utf-8" />
     <title>Detalle Cliente</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/bootstrap-icons.css" />
     <link rel="stylesheet" href="~/css/styles.css" />
 </head>
-<body>
-    <div class="header">
-        <div class="header-title">Detalle Cliente</div>
-    </div>
-
-    <div class="container">
-        <div class="main-content">
-            <h1>@Model.Nombres @Model.Apellidos</h1>
-
-            <table border="1" style="width:100%;">
-                <tr><td>Cedula</td><td>@Model.Cedula</td></tr>
-                <tr><td>Telefono</td><td>@Model.Telefono</td></tr>
-                <tr><td>Email</td><td>@Model.Email</td></tr>
-                <tr><td>Direccion</td><td>@Model.Direccion</td></tr>
-                <tr><td>Estado</td><td>@(Model.Activo ? "Activo" : "Inactivo")</td></tr>
-            </table>
-
-            <div class="button-container">
-                <a href="@Url.Action("Edit", new { id = Model.IdCliente })">Editar</a>
-                <a href="@Url.Action("Index")">Volver</a>
+<body class="admin-page">
+    <nav class="admin-topbar">
+        <div class="admin-brand">
+            <span class="admin-brand-icon"><i class="bi bi-eye"></i></span>
+            <div>
+                <small>Clientes</small>
+                <strong>Detalle Cliente</strong>
             </div>
         </div>
-    </div>
+        <a class="admin-topbar-link" href="@Url.Action("Index")"><i class="bi bi-arrow-left"></i> Volver</a>
+    </nav>
+
+    <main class="admin-shell admin-shell-narrow">
+        <section class="admin-panel">
+            <div class="admin-detail-head">
+                <span class="admin-avatar"><i class="bi bi-person"></i></span>
+                <div>
+                    <p class="admin-eyebrow">Ficha del cliente</p>
+                    <h1>@Model.Nombres @Model.Apellidos</h1>
+                    <span class="admin-status @(Model.Activo ? "admin-status-ok" : "admin-status-off")">
+                        @(Model.Activo ? "Activo" : "Inactivo")
+                    </span>
+                </div>
+            </div>
+
+            <dl class="admin-detail-grid">
+                <div><dt>Cedula</dt><dd>@Model.Cedula</dd></div>
+                <div><dt>Telefono</dt><dd>@Model.Telefono</dd></div>
+                <div><dt>Email</dt><dd>@Model.Email</dd></div>
+                <div><dt>Direccion</dt><dd>@Model.Direccion</dd></div>
+            </dl>
+
+            <div class="admin-form-actions">
+                <a class="btn admin-primary-btn" href="@Url.Action("Edit", new { id = Model.IdCliente })">
+                    <i class="bi bi-pencil-square"></i> Editar
+                </a>
+                <a class="btn btn-outline-secondary" href="@Url.Action("Index")">Volver</a>
+            </div>
+        </section>
+    </main>
+
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

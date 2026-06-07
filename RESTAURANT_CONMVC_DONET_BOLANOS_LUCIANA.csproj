@@ -112,6 +112,8 @@
     <Content Include="Images\monster %282%29.jpg" />
     <Content Include="Images\Monster.jpg" />
     <Content Include="Images\monster.png" />
+    <Content Include="lib\**\*.*" />
+    <Content Include="Scripts\confirmaciones.js" />
     <Content Include="Scripts\validaciones.js" />
     <Content Include="Web.config" />
   </ItemGroup>

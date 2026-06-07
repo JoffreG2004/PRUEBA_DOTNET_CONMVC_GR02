@@ -7,40 +7,84 @@
 <head>
     <meta charset="utf-8" />
     <title>Dashboard</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap-icons/bootstrap-icons.css" />
     <link rel="stylesheet" href="~/css/styles.css" />
 </head>
-<body>
-    <div class="header">
-        <div class="header-title">Dashboard Administrador</div>
-    </div>
-
-    <div class="container">
-        <div class="main-content">
-            <h1>Panel Administrativo</h1>
-            <p class="subtitle">Bienvenido @Session["AdminNombre"]</p>
-
-            <table border="1" style="width:100%; text-align:center;">
-                <tr>
-                    <th>Clientes</th>
-                    <th>Platos activos</th>
-                    <th>Facturas</th>
-                    <th>Ventas</th>
-                </tr>
-                <tr>
-                    <td>@ViewBag.TotalClientes</td>
-                    <td>@ViewBag.TotalPlatos</td>
-                    <td>@ViewBag.TotalPedidos</td>
-                    <td>$ @ViewBag.TotalVentas</td>
-                </tr>
-            </table>
-
-            <div class="button-container">
-                <a class="app-button" href="@Url.Action("Index", "Clientes")">CRUD Clientes</a>
-                <a class="app-button" href="@Url.Action("Index", "Platos")">Platos y Stock</a>
-                <a class="app-button" href="@Url.Action("Facturas", "Admin")">Facturas</a>
-                <a class="app-button" href="@Url.Action("Logout", "Admin")">Salir</a>
+<body class="admin-page">
+    <nav class="admin-topbar">
+        <div class="admin-brand">
+            <span class="admin-brand-icon"><i class="bi bi-speedometer2"></i></span>
+            <div>
+                <small>Restaurante Master Monster</small>
+                <strong>Panel Administrativo</strong>
             </div>
         </div>
-    </div>
+        <a class="admin-topbar-link" href="@Url.Action("Logout", "Admin")">
+            <i class="bi bi-box-arrow-right"></i> Salir
+        </a>
+    </nav>
+
+    <main class="admin-shell">
+        <section class="admin-hero">
+            <div>
+                <p class="admin-eyebrow">Bienvenido</p>
+                <h1>@Session["AdminNombre"]</h1>
+            </div>
+            <span class="admin-date"><i class="bi bi-calendar-check"></i> Dashboard</span>
+        </section>
+
+        <section class="admin-metrics">
+            <article class="admin-metric-card">
+                <i class="bi bi-people"></i>
+                <span>Clientes</span>
+                <strong>@ViewBag.TotalClientes</strong>
+            </article>
+            <article class="admin-metric-card">
+                <i class="bi bi-egg-fried"></i>
+                <span>Platos activos</span>
+                <strong>@ViewBag.TotalPlatos</strong>
+            </article>
+            <article class="admin-metric-card">
+                <i class="bi bi-receipt"></i>
+                <span>Facturas</span>
+                <strong>@ViewBag.TotalPedidos</strong>
+            </article>
+            <article class="admin-metric-card">
+                <i class="bi bi-cash-stack"></i>
+                <span>Ventas</span>
+                <strong>$ @ViewBag.TotalVentas</strong>
+            </article>
+        </section>
+
+        <section class="admin-panel">
+            <div class="admin-panel-header">
+                <div>
+                    <p class="admin-eyebrow">Accesos</p>
+                    <h2>Gestiona el restaurante</h2>
+                </div>
+            </div>
+
+            <div class="admin-menu-grid">
+                <a class="admin-menu-card" href="@Url.Action("Index", "Clientes")">
+                    <i class="bi bi-person-vcard"></i>
+                    <span>Gestion de Clientes</span>
+                    <small>Crear, revisar y editar datos</small>
+                </a>
+                <a class="admin-menu-card" href="@Url.Action("Index", "Platos")">
+                    <i class="bi bi-basket2"></i>
+                    <span>Platos y Stock</span>
+                    <small>Precios, disponibilidad e inventario</small>
+                </a>
+                <a class="admin-menu-card" href="@Url.Action("Facturas", "Admin")">
+                    <i class="bi bi-file-earmark-text"></i>
+                    <span>Facturas</span>
+                    <small>Pedidos emitidos y totales</small>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
