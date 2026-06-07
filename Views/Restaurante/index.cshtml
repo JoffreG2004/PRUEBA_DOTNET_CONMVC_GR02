@@ -30,14 +30,9 @@
             <h1>Realizar tu Pedido</h1>
             <p class="subtitle">Selecciona cualquier plato y la cantidad que deseas.</p>
 
-            @if (TempData["ErrorPedido"] != null)
-            {
-                <div id="errores-validacion" class="mostrar">
-                    <h3>@TempData["ErrorPedido"]</h3>
-                </div>
-            }
+            <div id="errores-validacion"></div>
 
-            <form action="@Url.Action("Salida","Restaurante")" method="post" class="js-confirm-form" data-confirm-title="Emitir factura" data-confirm-text="Se guardara el pedido y se descontara el stock seleccionado." data-confirm-button="Emitir factura">
+            <form action="@Url.Action("Salida","Restaurante")" method="post" class="js-validate-client" data-confirm-title="Emitir factura" data-confirm-text="Se guardara el pedido y se descontara el stock seleccionado." data-confirm-button="Emitir factura">
 
                 <div class="form-section">
                     <h2>Tus Datos</h2>
@@ -51,24 +46,24 @@
                 <div class="form-section" id="datos-cliente" style="display:none;">
                     <h2>Datos para factura</h2>
                     <div class="form-group-vertical">
-                        <label>Cedula/RUC</label>
-                        <input type="text" name="cedula" placeholder="Ingresa cedula o RUC" class="form-input" />
+                        <label>Cedula</label>
+                        <input type="text" name="cedula" placeholder="Ingresa tu cedula" class="form-input" maxlength="10" data-filter="numbers" />
                     </div>
                     <div class="form-group-vertical">
                         <label>Nombres</label>
-                        <input type="text" name="nombres" placeholder="Ingresa tus nombres" class="form-input" />
+                        <input type="text" name="nombres" placeholder="Ingresa tus nombres" class="form-input" data-filter="letters" />
                     </div>
                     <div class="form-group-vertical">
                         <label>Apellidos</label>
-                        <input type="text" name="apellidos" placeholder="Ingresa tus apellidos" class="form-input" />
+                        <input type="text" name="apellidos" placeholder="Ingresa tus apellidos" class="form-input" data-filter="letters" />
                     </div>
                     <div class="form-group-vertical">
                         <label>Telefono</label>
-                        <input type="text" name="telefono" placeholder="Ingresa tu telefono" class="form-input" />
+                        <input type="text" name="telefono" placeholder="Ejemplo: 0999999999" class="form-input" maxlength="10" data-filter="numbers" />
                     </div>
                     <div class="form-group-vertical">
                         <label>Email</label>
-                        <input type="email" name="email" placeholder="Ingresa tu email" class="form-input" />
+                        <input type="email" name="email" placeholder="usuario@dominio.com" class="form-input" data-filter="email" />
                     </div>
                     <div class="form-group-vertical">
                         <label>Direccion</label>
@@ -138,7 +133,18 @@
     </div>
 
     <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
-    <script src="~/Scripts/confirmaciones.js"></script>
+    <script src="~/Scripts/validaciones.js?v=4"></script>
+    <script src="~/Scripts/confirmaciones.js?v=4"></script>
+    @if (TempData["ErrorPedido"] != null)
+    {
+        <script>
+            Swal.fire({
+                title: 'Revisa el pedido',
+                text: '@HttpUtility.JavaScriptStringEncode(TempData["ErrorPedido"].ToString())',
+                icon: 'warning'
+            });
+        </script>
+    }
     <script>
         document.querySelectorAll('input[name="tipoCliente"]').forEach(function (opcion) {
             opcion.addEventListener('change', function () {

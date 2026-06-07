@@ -550,7 +550,10 @@ button,
     box-shadow: 0 8px 20px rgba(117, 137, 86, 0.4);
     position: relative;
     overflow: hidden;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     text-decoration: none;
     margin: 6px;
 }
@@ -589,6 +592,11 @@ button:active,
 }
 
 .button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
     text-align: center;
     margin-top: 40px;
     margin-bottom: 20px;
@@ -1348,6 +1356,40 @@ button:active,
     outline: none;
 }
 
+.admin-page .file-input {
+    padding: 10px 12px;
+}
+
+.image-preview {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+    padding: 10px;
+    border: 1px solid #e2d7c6;
+    border-radius: 12px;
+    background: #fffaf0;
+}
+
+.image-preview img {
+    width: 70px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid #758956;
+}
+
+.image-preview img:hover {
+    transform: none;
+}
+
+.image-preview span {
+    color: #6d5b4c;
+    font-size: 13px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
 .admin-page input[type="checkbox"] {
     width: 18px;
     height: 18px;
@@ -1442,15 +1484,58 @@ button:active,
 }
 
 .swal2-popup {
-    border-radius: 18px;
-    font-family: 'Poppins', sans-serif;
+    font-family: inherit !important;
 }
 
-.swal2-popup button {
-    border-radius: 999px !important;
+.swal2-popup .swal2-title {
+    background: transparent !important;
     box-shadow: none !important;
+    border-radius: 0 !important;
+    color: #545454 !important;
+    font-family: inherit !important;
+    font-size: 1.875em !important;
+    font-weight: 600 !important;
     letter-spacing: 0 !important;
+    margin: 0 !important;
+    padding: 0.8em 1em 0 !important;
+    text-align: center !important;
     text-transform: none !important;
+}
+
+.swal2-popup .swal2-html-container {
+    color: #545454 !important;
+    font-family: inherit !important;
+    font-size: 1.125em !important;
+}
+
+.swal2-popup .swal2-actions {
+    margin: 1.25em auto 0 !important;
+}
+
+.swal2-popup .swal2-styled {
+    border: 0 !important;
+    border-radius: 0.25em !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+    font-family: inherit !important;
+    font-size: 1em !important;
+    font-weight: 500 !important;
+    letter-spacing: 0 !important;
+    margin: 0.3125em !important;
+    min-height: 0 !important;
+    min-width: 0 !important;
+    overflow: visible !important;
+    padding: 0.625em 1.1em !important;
+    position: static !important;
+    text-transform: none !important;
+}
+
+.swal2-popup .swal2-confirm {
+    background-color: #7066e0 !important;
+}
+
+.swal2-popup .swal2-cancel {
+    background-color: #6e7881 !important;
 }
 
 @media (max-width: 920px) {

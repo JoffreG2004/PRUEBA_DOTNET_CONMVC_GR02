@@ -96,6 +96,16 @@
 
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
-    <script src="~/Scripts/confirmaciones.js"></script>
+    <script src="~/Scripts/confirmaciones.js?v=4"></script>
+    @if (TempData["SwalTitle"] != null)
+    {
+        <script>
+            Swal.fire({
+                icon: '@HttpUtility.JavaScriptStringEncode((TempData["SwalIcon"] ?? "success").ToString())',
+                title: '@HttpUtility.JavaScriptStringEncode(TempData["SwalTitle"].ToString())',
+                text: '@HttpUtility.JavaScriptStringEncode((TempData["SwalText"] ?? "").ToString())'
+            });
+        </script>
+    }
 </body>
 </html>

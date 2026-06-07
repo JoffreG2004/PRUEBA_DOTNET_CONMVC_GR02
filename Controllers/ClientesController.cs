@@ -1,4 +1,5 @@
 using RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Models;
+using RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Helpers;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
@@ -65,13 +66,19 @@ namespace RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Controllers
                 return RedirectToAction("Login", "Admin");
             }
 
+            ValidarCliente(cliente);
+
             if (ModelState.IsValid)
             {
                 db.Clientes.Add(cliente);
                 db.SaveChanges();
+                TempData["SwalIcon"] = "success";
+                TempData["SwalTitle"] = "Cliente registrado";
+                TempData["SwalText"] = "El cliente se guardo correctamente.";
                 return RedirectToAction("Index");
             }
 
+            ViewBag.SwalError = ObtenerPrimerError();
             return View(cliente);
         }
 
@@ -105,13 +112,19 @@ namespace RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Controllers
                 return RedirectToAction("Login", "Admin");
             }
 
+            ValidarCliente(cliente);
+
             if (ModelState.IsValid)
             {
                 db.Entry(cliente).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["SwalIcon"] = "success";
+                TempData["SwalTitle"] = "Cliente actualizado";
+                TempData["SwalText"] = "Los datos del cliente se guardaron correctamente.";
                 return RedirectToAction("Index");
             }
 
+            ViewBag.SwalError = ObtenerPrimerError();
             return View(cliente);
         }
 
@@ -151,6 +164,9 @@ namespace RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Controllers
                 cliente.Activo = false;
                 db.Entry(cliente).State = EntityState.Modified;
                 db.SaveChanges();
+                TempData["SwalIcon"] = "success";
+                TempData["SwalTitle"] = "Cliente eliminado";
+                TempData["SwalText"] = "El cliente quedo marcado como inactivo.";
             }
 
             return RedirectToAction("Index");
@@ -169,6 +185,64 @@ namespace RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Controllers
         private bool EsAdmin()
         {
             return Session["AdminId"] != null;
+        }
+
+        private string ObtenerPrimerError()
+        {
+            return ModelState.Values
+                .SelectMany(v => v.Errors)
+                .Select(e => e.ErrorMessage)
+                .FirstOrDefault(e => !string.IsNullOrWhiteSpace(e)) ?? "Revisa los datos ingresados.";
+        }
+
+        private void ValidarCliente(Cliente cliente)
+        {
+            cliente.Cedula = string.IsNullOrWhiteSpace(cliente.Cedula) ? null : cliente.Cedula.Trim();
+            cliente.Nombres = string.IsNullOrWhiteSpace(cliente.Nombres) ? cliente.Nombres : cliente.Nombres.Trim();
+            cliente.Apellidos = string.IsNullOrWhiteSpace(cliente.Apellidos) ? cliente.Apellidos : cliente.Apellidos.Trim();
+            cliente.Telefono = string.IsNullOrWhiteSpace(cliente.Telefono) ? null : cliente.Telefono.Trim();
+            cliente.Email = string.IsNullOrWhiteSpace(cliente.Email) ? null : cliente.Email.Trim().ToLower();
+            cliente.Direccion = string.IsNullOrWhiteSpace(cliente.Direccion) ? null : cliente.Direccion.Trim();
+
+            if (!ValidacionesEcuador.CedulaEcuador(cliente.Cedula))
+            {
+                ModelState.AddModelError("Cedula", "La cedula ecuatoriana no es valida.");
+            }
+
+            if (!ValidacionesEcuador.SoloLetras(cliente.Nombres))
+            {
+                ModelState.AddModelError("Nombres", "Los nombres solo deben tener letras y espacios.");
+            }
+
+            if (!ValidacionesEcuador.SoloLetras(cliente.Apellidos))
+            {
+                ModelState.AddModelError("Apellidos", "Los apellidos solo deben tener letras y espacios.");
+            }
+
+            if (!ValidacionesEcuador.CelularEcuador(cliente.Telefono))
+            {
+                ModelState.AddModelError("Telefono", "El celular debe tener 10 digitos y empezar con 09.");
+            }
+
+            if (!ValidacionesEcuador.EmailValido(cliente.Email))
+            {
+                ModelState.AddModelError("Email", "El correo debe tener formato usuario@dominio.com.");
+            }
+
+            if (!string.IsNullOrWhiteSpace(cliente.Cedula) && db.Clientes.Any(c => c.Cedula == cliente.Cedula && c.IdCliente != cliente.IdCliente))
+            {
+                ModelState.AddModelError("Cedula", "Ya existe un cliente con esta cedula.");
+            }
+
+            if (!string.IsNullOrWhiteSpace(cliente.Telefono) && db.Clientes.Any(c => c.Telefono == cliente.Telefono && c.IdCliente != cliente.IdCliente))
+            {
+                ModelState.AddModelError("Telefono", "Ya existe un cliente con este celular.");
+            }
+
+            if (!string.IsNullOrWhiteSpace(cliente.Email) && db.Clientes.Any(c => c.Email == cliente.Email && c.IdCliente != cliente.IdCliente))
+            {
+                ModelState.AddModelError("Email", "Ya existe un cliente con este correo.");
+            }
         }
     }
 }

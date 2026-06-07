@@ -44,10 +44,22 @@ CREATE TABLE dbo.Cliente
     Activo BIT NOT NULL CONSTRAINT DF_Cliente_Activo DEFAULT (1),
     FechaRegistro DATETIME NOT NULL CONSTRAINT DF_Cliente_FechaRegistro DEFAULT (GETDATE()),
     CONSTRAINT PK_Cliente PRIMARY KEY (IdCliente),
-    CONSTRAINT UQ_Cliente_Cedula UNIQUE (Cedula),
     CONSTRAINT CK_Cliente_Nombres CHECK (LEN(LTRIM(RTRIM(Nombres))) > 0),
     CONSTRAINT CK_Cliente_Apellidos CHECK (LEN(LTRIM(RTRIM(Apellidos))) > 0)
 );
+GO
+
+CREATE UNIQUE INDEX UQ_Cliente_Cedula
+ON dbo.Cliente(Cedula)
+WHERE Cedula IS NOT NULL AND LTRIM(RTRIM(Cedula)) <> '';
+
+CREATE UNIQUE INDEX UQ_Cliente_Telefono
+ON dbo.Cliente(Telefono)
+WHERE Telefono IS NOT NULL AND LTRIM(RTRIM(Telefono)) <> '' AND Telefono <> 'N/A';
+
+CREATE UNIQUE INDEX UQ_Cliente_Email
+ON dbo.Cliente(Email)
+WHERE Email IS NOT NULL AND LTRIM(RTRIM(Email)) <> '' AND Email <> 'consumidorfinal@restaurante.local';
 GO
 
 CREATE TABLE dbo.TipoPlato
@@ -182,10 +194,15 @@ VALUES
 ((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Entrada'), 'Bolon de Verde', 'Bolon de verde con queso o chicharron.', 3.00, 20, 'bolon-de-verde.jpg'),
 ((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Sopa'), 'Caldo de Bolas de Verde', 'Sopa tradicional con bolas de verde rellenas.', 4.50, 15, 'caldo-bolas-verde.jpg'),
 ((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Sopa'), 'Caldo de Gallina', 'Caldo de gallina criolla con papa y hierbas.', 4.00, 15, 'caldo-de-gallina.jpg'),
+((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Sopa'), 'Caldo de Patas', 'Caldo tradicional de patas con mote y especias.', 4.75, 15, 'caldo-de-patas.png'),
+((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Entrada'), 'Ceviche de Camaron', 'Ceviche fresco de camaron con limon, cebolla y tomate.', 5.50, 15, 'ceviche-de-camaron.jpg'),
 ((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Plato fuerte'), 'Arroz Marinero', 'Arroz preparado con mariscos y especias.', 8.50, 12, 'arroz-marinero.jpg'),
 ((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Plato fuerte'), 'Churrasco', 'Carne a la plancha acompanada de guarniciones.', 6.00, 12, 'churrasco.jpg'),
+((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Plato fuerte'), 'Apanado', 'Filete apanado acompanado de arroz y ensalada.', 6.50, 12, 'apanado.jpg'),
 ((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Postre'), 'Dulce de Higos', 'Postre tradicional de higos en almibar.', 2.00, 18, 'dulce-de-higos.jpg'),
 ((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Postre'), 'Espumilla', 'Postre ecuatoriano batido con pulpa de fruta.', 1.50, 18, 'espumilla.jpg'),
-((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Bebida'), 'Jugo Natural', 'Jugo natural del dia.', 1.75, 30, 'helado.jpg'),
-((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Bebida'), 'Gaseosa', 'Bebida gaseosa personal.', 1.50, 30, 'espumilla.jpg');
+((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Postre'), 'Helado', 'Helado servido con frutas y salsa dulce.', 2.25, 18, 'helado.jpg'),
+((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Bebida'), 'Agua', 'Botella de agua personal.', 1.00, 30, 'aagua.jpg'),
+((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Bebida'), 'Jugo Natural', 'Jugo natural del dia.', 1.75, 30, 'jugo.jpg'),
+((SELECT IdTipoPlato FROM dbo.TipoPlato WHERE Nombre = 'Bebida'), 'Gaseosa', 'Bebida gaseosa personal.', 1.50, 30, 'gaseosa.jpg');
 GO

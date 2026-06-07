@@ -29,8 +29,17 @@
     </div>
 
     <div class="form-group-vertical">
-        @Html.LabelFor(model => model.Imagen)
-        @Html.TextBoxFor(model => model.Imagen, new { @class = "form-input", maxlength = "200" })
+        <label>Imagen</label>
+        <input class="form-input file-input" type="file" name="imagenArchivo" accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp" />
+        @Html.HiddenFor(model => model.Imagen)
+        @if (!string.IsNullOrWhiteSpace(Model.Imagen))
+        {
+            <div class="image-preview">
+                <img src="@Url.Content("~/Images/" + Model.Imagen)" alt="@Model.Nombre" />
+                <span>@Model.Imagen</span>
+            </div>
+        }
+        @Html.ValidationMessageFor(model => model.Imagen)
     </div>
 
     <div class="form-group-vertical">

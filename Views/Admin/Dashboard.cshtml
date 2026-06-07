@@ -9,6 +9,7 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap-icons/bootstrap-icons.css" />
+    <link rel="stylesheet" href="~/lib/sweetalert2/sweetalert2.min.css" />
     <link rel="stylesheet" href="~/css/styles.css" />
 </head>
 <body class="admin-page">
@@ -86,5 +87,16 @@
     </main>
 
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
+    @if (TempData["SwalTitle"] != null)
+    {
+        <script>
+            Swal.fire({
+                icon: '@HttpUtility.JavaScriptStringEncode((TempData["SwalIcon"] ?? "success").ToString())',
+                title: '@HttpUtility.JavaScriptStringEncode(TempData["SwalTitle"].ToString())',
+                text: '@HttpUtility.JavaScriptStringEncode((TempData["SwalText"] ?? "").ToString())'
+            });
+        </script>
+    }
 </body>
 </html>

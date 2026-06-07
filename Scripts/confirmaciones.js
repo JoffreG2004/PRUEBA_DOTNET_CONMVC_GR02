@@ -12,9 +12,7 @@ function confirmarAccion(config) {
             icon: "question",
             showCancelButton: true,
             confirmButtonText: confirmText,
-            cancelButtonText: "Cancelar",
-            confirmButtonColor: "#758956",
-            cancelButtonColor: "#3b2c20"
+            cancelButtonText: "Cancelar"
         }).then(function (result) {
             if (result.isConfirmed) {
                 if (form) {
@@ -53,6 +51,10 @@ function confirmarAccion(config) {
     });
 
     document.addEventListener("submit", function (event) {
+        if (event.defaultPrevented) {
+            return;
+        }
+
         var form = event.target.closest(".js-confirm-form");
         if (!form) {
             return;

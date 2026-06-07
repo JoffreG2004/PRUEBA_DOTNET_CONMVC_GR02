@@ -10,6 +10,7 @@
     <title>Aumentar Stock</title>
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap-icons/bootstrap-icons.css" />
+    <link rel="stylesheet" href="~/lib/sweetalert2/sweetalert2.min.css" />
     <link rel="stylesheet" href="~/css/styles.css" />
 </head>
 <body class="admin-page">
@@ -54,5 +55,16 @@
     </main>
 
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
+    @if (ViewBag.SwalError != null)
+    {
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'No se pudo actualizar',
+                text: '@HttpUtility.JavaScriptStringEncode(ViewBag.SwalError.ToString())'
+            });
+        </script>
+    }
 </body>
 </html>

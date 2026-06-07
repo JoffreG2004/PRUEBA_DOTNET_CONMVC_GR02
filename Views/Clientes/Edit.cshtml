@@ -10,6 +10,7 @@
     <title>Editar Cliente</title>
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap-icons/bootstrap-icons.css" />
+    <link rel="stylesheet" href="~/lib/sweetalert2/sweetalert2.min.css" />
     <link rel="stylesheet" href="~/css/styles.css" />
 </head>
 <body class="admin-page">
@@ -33,7 +34,7 @@
                 </div>
             </div>
 
-            @using (Html.BeginForm())
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { @class = "js-validate-client" }))
             {
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(model => model.IdCliente)
@@ -50,5 +51,17 @@
     </main>
 
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="~/Scripts/validaciones.js?v=4"></script>
+    @if (ViewBag.SwalError != null)
+    {
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'No se pudo guardar',
+                text: '@HttpUtility.JavaScriptStringEncode(ViewBag.SwalError.ToString())'
+            });
+        </script>
+    }
 </body>
 </html>

@@ -25,12 +25,15 @@ namespace RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Controllers
 
             if (admin == null)
             {
-                ViewBag.Error = "Usuario o clave incorrectos.";
+                ViewBag.SwalError = "Usuario o clave incorrectos.";
                 return View();
             }
 
             Session["AdminId"] = admin.IdUsuario;
             Session["AdminNombre"] = admin.Nombre;
+            TempData["SwalIcon"] = "success";
+            TempData["SwalTitle"] = "Ingreso correcto";
+            TempData["SwalText"] = "Bienvenido al panel administrador.";
             return RedirectToAction("Dashboard");
         }
 

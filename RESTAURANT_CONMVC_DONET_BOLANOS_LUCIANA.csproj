@@ -96,6 +96,7 @@
   <ItemGroup>
     <Content Include="css\styles.css" />
     <Content Include="Global.asax" />
+    <Content Include="Images\aagua.jpg" />
     <Content Include="Images\apanado.jpg" />
     <Content Include="Images\arroz-marinero.jpg" />
     <Content Include="Images\bolon-de-verde.jpg" />
@@ -109,6 +110,9 @@
     <Content Include="Images\empanada-de-morocho.jpg" />
     <Content Include="Images\espumilla.jpg" />
     <Content Include="Images\helado.jpg" />
+    <Content Include="Images\gaseosa.jpg" />
+    <Content Include="Images\jugo.jpg" />
+    <Content Include="Images\jugo.webp" />
     <Content Include="Images\monster %282%29.jpg" />
     <Content Include="Images\Monster.jpg" />
     <Content Include="Images\monster.png" />
@@ -124,6 +128,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PlatosController.cs" />
     <Compile Include="Controllers\RestauranteController.cs" />
+    <Compile Include="Helpers\ValidacionesEcuador.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

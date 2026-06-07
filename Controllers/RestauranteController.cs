@@ -1,4 +1,5 @@
 using RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Models;
+using RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -30,6 +31,11 @@ namespace RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Controllers
             if (platoIds == null || platoIds.Length == 0)
             {
                 TempData["ErrorPedido"] = "Selecciona al menos un plato.";
+                return RedirectToAction("Index");
+            }
+
+            if (tipoCliente == "datos" && !DatosClienteValidos(nombres, apellidos, cedula, telefono, email))
+            {
                 return RedirectToAction("Index");
             }
 
@@ -163,6 +169,8 @@ namespace RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Controllers
             }
 
             string cedulaCliente = string.IsNullOrWhiteSpace(cedula) ? null : cedula.Trim();
+            string telefonoCliente = string.IsNullOrWhiteSpace(telefono) ? null : telefono.Trim();
+            string emailCliente = string.IsNullOrWhiteSpace(email) ? null : email.Trim().ToLower();
             Cliente cliente = null;
 
             if (!string.IsNullOrWhiteSpace(cedulaCliente))
@@ -179,9 +187,9 @@ namespace RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Controllers
             cliente.Cedula = cedulaCliente;
             cliente.Nombres = string.IsNullOrWhiteSpace(nombres) ? "Cliente" : nombres.Trim();
             cliente.Apellidos = string.IsNullOrWhiteSpace(apellidos) ? "Sin apellido" : apellidos.Trim();
-            cliente.Telefono = telefono;
-            cliente.Email = email;
-            cliente.Direccion = direccion;
+            cliente.Telefono = telefonoCliente;
+            cliente.Email = emailCliente;
+            cliente.Direccion = string.IsNullOrWhiteSpace(direccion) ? null : direccion.Trim();
             cliente.Activo = true;
             db.SaveChanges();
 
@@ -193,6 +201,58 @@ namespace RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Controllers
             string valor = Request.Form["cantidad_" + platoId];
             int cantidad;
             return int.TryParse(valor, NumberStyles.Integer, CultureInfo.InvariantCulture, out cantidad) ? cantidad : 0;
+        }
+
+        private bool DatosClienteValidos(string nombres, string apellidos, string cedula, string telefono, string email)
+        {
+            var errores = new List<string>();
+
+            if (string.IsNullOrWhiteSpace(cedula) || !ValidacionesEcuador.CedulaEcuador(cedula))
+            {
+                errores.Add("Ingresa una cedula ecuatoriana valida.");
+            }
+
+            if (string.IsNullOrWhiteSpace(nombres) || !ValidacionesEcuador.SoloLetras(nombres))
+            {
+                errores.Add("Los nombres solo deben tener letras y espacios.");
+            }
+
+            if (string.IsNullOrWhiteSpace(apellidos) || !ValidacionesEcuador.SoloLetras(apellidos))
+            {
+                errores.Add("Los apellidos solo deben tener letras y espacios.");
+            }
+
+            if (string.IsNullOrWhiteSpace(telefono) || !ValidacionesEcuador.CelularEcuador(telefono))
+            {
+                errores.Add("El celular debe tener 10 digitos y empezar con 09.");
+            }
+
+            if (string.IsNullOrWhiteSpace(email) || !ValidacionesEcuador.EmailValido(email))
+            {
+                errores.Add("El correo debe tener formato usuario@dominio.com.");
+            }
+
+            string cedulaCliente = string.IsNullOrWhiteSpace(cedula) ? null : cedula.Trim();
+            string telefonoCliente = string.IsNullOrWhiteSpace(telefono) ? null : telefono.Trim();
+            string emailCliente = string.IsNullOrWhiteSpace(email) ? null : email.Trim().ToLower();
+
+            if (!string.IsNullOrWhiteSpace(telefonoCliente) && db.Clientes.Any(c => c.Telefono == telefonoCliente && c.Cedula != cedulaCliente))
+            {
+                errores.Add("Ya existe un cliente con ese celular.");
+            }
+
+            if (!string.IsNullOrWhiteSpace(emailCliente) && db.Clientes.Any(c => c.Email == emailCliente && c.Cedula != cedulaCliente))
+            {
+                errores.Add("Ya existe un cliente con ese correo.");
+            }
+
+            if (errores.Count > 0)
+            {
+                TempData["ErrorPedido"] = string.Join(" ", errores);
+                return false;
+            }
+
+            return true;
         }
 
         protected override void Dispose(bool disposing)
