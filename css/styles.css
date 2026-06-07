@@ -148,6 +148,7 @@ table[border="1"] th {
     font-size: 11px;
     letter-spacing: 0.5px;
     border: none;
+    white-space: nowrap;
 }
 
 table[border="1"] td {
@@ -179,6 +180,7 @@ table[border="1"] tbody tr:hover td {
 
 .menu-table {
     width: 100%;
+    table-layout: auto;
     border-collapse: collapse;
     margin-bottom: 25px;
     background-color: #f5f0e8;
@@ -441,6 +443,30 @@ input[type="radio"]:checked {
     filter: drop-shadow(0 2px 5px rgba(59, 44, 32, 0.4));
 }
 
+.menu-table th:nth-child(3),
+.menu-table td:nth-child(3) {
+    width: 32%;
+}
+
+.menu-table th:nth-child(4),
+.menu-table td:nth-child(4) {
+    width: 96px;
+    min-width: 96px;
+    white-space: nowrap;
+}
+
+.menu-table th:nth-child(5),
+.menu-table td:nth-child(5) {
+    width: 120px;
+    min-width: 120px;
+}
+
+.menu-table th:nth-child(6),
+.menu-table td:nth-child(6) {
+    width: 150px;
+    min-width: 150px;
+}
+
 .qty-control {
     display: inline-flex;
     align-items: center;
@@ -531,6 +557,72 @@ input[type="radio"]:checked {
     font-size: 14px !important;
     letter-spacing: 0.4px;
     text-transform: uppercase;
+}
+
+.menu-table th i,
+.category-title-row i {
+    margin-right: 7px;
+    font-size: 16px;
+    vertical-align: -1px;
+}
+
+.menu-filter-bar {
+    display: grid;
+    grid-template-columns: minmax(220px, 1.4fr) minmax(190px, 0.8fr) 46px;
+    gap: 12px;
+    align-items: center;
+    margin: 22px 0 18px;
+}
+
+.menu-filter-field {
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 14px;
+    border: 2px solid #758956;
+    border-radius: 14px;
+    background: #fffaf0;
+    box-shadow: 0 8px 18px rgba(59, 44, 32, 0.08);
+}
+
+.menu-filter-field i {
+    color: #758956;
+    font-size: 20px;
+}
+
+.menu-filter-field input,
+.menu-filter-field select {
+    width: 100%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #3b2c20;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.menu-filter-clear {
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+    padding: 0;
+    border-radius: 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.empty-menu-message {
+    padding: 26px 16px !important;
+    color: #758956;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+}
+
+.empty-menu-message i {
+    margin-right: 8px;
 }
 
 button,
@@ -1566,5 +1658,15 @@ button:active,
     .admin-form-grid,
     .admin-detail-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .menu-filter-bar {
+        grid-template-columns: 1fr;
+    }
+
+    .menu-filter-clear {
+        width: 100%;
     }
 }

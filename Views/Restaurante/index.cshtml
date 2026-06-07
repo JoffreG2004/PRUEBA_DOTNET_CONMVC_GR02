@@ -1,6 +1,11 @@
 @model IEnumerable<RESTAURANT_CONMVC_DONET_BOLANOS_LUCIANA.Models.Plato>
 @{
     Layout = null;
+    var tipos = Model
+        .Select(p => p.TipoPlato != null ? p.TipoPlato.Nombre : "Otros")
+        .Distinct()
+        .OrderBy(t => t)
+        .ToList();
 }
 
 <!DOCTYPE html>
@@ -71,25 +76,52 @@
                     </div>
                 </div>
 
-                <table border="1" style="width:100%; text-align:center;">
+                <div class="menu-filter-bar">
+                    <div class="menu-filter-field">
+                        <i class="bi bi-search"></i>
+                        <input id="buscar-plato" type="text" placeholder="Buscar plato" autocomplete="off" />
+                    </div>
+                    <div class="menu-filter-field">
+                        <i class="bi bi-funnel"></i>
+                        <select id="filtrar-tipo">
+                            <option value="">Todos los tipos</option>
+                            @foreach (var tipo in tipos)
+                            {
+                                <option value="@tipo">@tipo</option>
+                            }
+                        </select>
+                    </div>
+                    <button type="button" class="menu-filter-clear" id="limpiar-filtros" title="Limpiar filtros">
+                        <i class="bi bi-x-lg"></i>
+                    </button>
+                </div>
+
+                <table class="menu-table" border="1" style="width:100%; text-align:center;">
                     <tr>
-                        <th>Nombre</th>
-                        <th>Imagen</th>
-                        <th>Descripcion</th>
-                        <th>Precio</th>
-                        <th>Stock</th>
-                        <th>Cantidad</th>
+                        <th><i class="bi bi-card-text"></i> Nombre</th>
+                        <th><i class="bi bi-image"></i> Imagen</th>
+                        <th><i class="bi bi-chat-left-text"></i> Descripcion</th>
+                        <th><i class="bi bi-cash-coin"></i> Precio</th>
+                        <th><i class="bi bi-box-seam"></i> Stock</th>
+                        <th><i class="bi bi-plus-slash-minus"></i> Cantidad</th>
                     </tr>
 
                     @foreach (var grupo in Model.GroupBy(p => p.TipoPlato != null ? p.TipoPlato.Nombre : "Otros"))
                     {
-                        <tr class="category-title-row">
-                            <td colspan="6"><strong>@grupo.Key</strong></td>
+                        var iconoCategoria = "bi-grid";
+                        if (grupo.Key == "Bebida") { iconoCategoria = "bi-cup-straw"; }
+                        else if (grupo.Key == "Entrada") { iconoCategoria = "bi-egg-fried"; }
+                        else if (grupo.Key == "Sopa") { iconoCategoria = "bi-cup-hot"; }
+                        else if (grupo.Key == "Plato fuerte") { iconoCategoria = "bi-fork-knife"; }
+                        else if (grupo.Key == "Postre") { iconoCategoria = "bi-cake2"; }
+
+                        <tr class="category-title-row" data-category="@grupo.Key">
+                            <td colspan="6"><strong><i class="bi @iconoCategoria"></i> @grupo.Key</strong></td>
                         </tr>
 
                         foreach (var plato in grupo)
                         {
-                            <tr>
+                            <tr class="menu-item-row" data-type="@grupo.Key" data-name="@plato.Nombre">
                                 <td>@plato.Nombre</td>
                                 <td>
                                     @if (!string.IsNullOrWhiteSpace(plato.Imagen))
@@ -111,6 +143,12 @@
                             </tr>
                         }
                     }
+                    <tr id="sin-resultados-menu" style="display:none;">
+                        <td colspan="6" class="empty-menu-message">
+                            <i class="bi bi-search"></i>
+                            No hay platos con ese filtro.
+                        </td>
+                    </tr>
                 </table>
 
                 <div class="order-summary-mini">
@@ -184,6 +222,50 @@
             control.querySelector('.qty-plus').addEventListener('click', function () {
                 setCantidad(parseInt(input.value || '0', 10) + 1);
             });
+        });
+
+        var buscarPlato = document.getElementById('buscar-plato');
+        var filtrarTipo = document.getElementById('filtrar-tipo');
+        var limpiarFiltros = document.getElementById('limpiar-filtros');
+        var filaSinResultados = document.getElementById('sin-resultados-menu');
+
+        function normalizarTexto(valor) {
+            return (valor || '').toString().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        }
+
+        function aplicarFiltrosMenu() {
+            var busqueda = normalizarTexto(buscarPlato.value);
+            var tipo = filtrarTipo.value;
+            var visiblesPorTipo = {};
+            var totalVisible = 0;
+
+            document.querySelectorAll('.menu-item-row').forEach(function (fila) {
+                var nombreCoincide = normalizarTexto(fila.dataset.name).indexOf(busqueda) >= 0;
+                var tipoCoincide = !tipo || fila.dataset.type === tipo;
+                var visible = nombreCoincide && tipoCoincide;
+
+                fila.style.display = visible ? '' : 'none';
+
+                if (visible) {
+                    visiblesPorTipo[fila.dataset.type] = true;
+                    totalVisible++;
+                }
+            });
+
+            document.querySelectorAll('.category-title-row').forEach(function (fila) {
+                fila.style.display = visiblesPorTipo[fila.dataset.category] ? '' : 'none';
+            });
+
+            filaSinResultados.style.display = totalVisible === 0 ? '' : 'none';
+        }
+
+        buscarPlato.addEventListener('input', aplicarFiltrosMenu);
+        filtrarTipo.addEventListener('change', aplicarFiltrosMenu);
+        limpiarFiltros.addEventListener('click', function () {
+            buscarPlato.value = '';
+            filtrarTipo.value = '';
+            aplicarFiltrosMenu();
+            buscarPlato.focus();
         });
     </script>
 </body>
